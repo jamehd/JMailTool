@@ -2,16 +2,30 @@
   "name": "tool",
   "version": "1.0.0",
   "description": "Tool Gmail",
-  "main": "index.js",
+  "main": "gmail.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node gmail.js",
+    "build": "nexe"
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/**/*",
+      "src/**/*"
+    ],
+    "targets": [
+      "node10-win-x86"
+    ]
   },
   "author": "JamesHD",
   "license": "ISC",
   "dependencies": {
     "jsonfile": "^6.1.0",
+    "pkg": "^5.2.1",
     "puppeteer": "^9.1.1",
     "puppeteer-extra": "^3.1.18",
     "puppeteer-extra-plugin-stealth": "^2.7.8"
+  },
+  "devDependencies": {
+    "nexe": "^4.0.0-beta.18"
   }
 }
