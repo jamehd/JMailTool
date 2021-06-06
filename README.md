@@ -6,3 +6,6 @@ npm i puppeteer
 npm i nexe
 npm i windows-build-tools -g
 npm install --save pkg
+
+
+.\node_modules\.bin\pkg .\gmailJobs.js -o .\release\app -t node14-win

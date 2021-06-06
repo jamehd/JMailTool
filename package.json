@@ -4,8 +4,7 @@
   "description": "Tool Gmail",
   "main": "gmail.js",
   "scripts": {
-    "start": "node gmail.js",
-    "build": "nexe"
+    "build": "pkg gmailJobs.js"
   },
   "pkg": {
     "assets": [
@@ -14,6 +13,10 @@
     ],
     "targets": [
       "node10-win-x86"
+    ],
+    "scripts": [
+      "node_modules/puppeteer/lib/*.js",
+      "node_modules/puppeteer-extra-plugin-stealth/**/*.js"
     ]
   },
   "author": "JamesHD",
