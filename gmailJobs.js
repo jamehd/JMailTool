@@ -1,6 +1,7 @@
 // Library
 const puppeteer = require('puppeteer-extra')
 const stealthPlugin = require('puppeteer-extra-plugin-stealth')
+const delayTime = require('./delayTime');
 
 // Process Config
 const isPkg = typeof process.pkg !== 'undefined';
@@ -48,8 +49,8 @@ const readEmail = async (page) => {
     for (const element of mailsUnreaded) {
         console.log(element)
         await page.goto(element)
-        await delay(timeStep)
-        await delay(timeReadEmail)
+        await delayTime.delayStep()
+        await delayTime.delayReadMail()
     }
 }
 
@@ -61,9 +62,9 @@ const sendEmail = async (page) => {
     await page.type('textarea.vO', sendToEmail)
     await page.type('input.aoT', emailTitle)
     await page.type('div.Am.Al.editable.LW-avf.tS-tW', emailContent)
-    await delay(timeStep)
+    await delayTime.delayStep()
     await page.click('div.T-I.J-J5-Ji.aoO.v7.T-I-atl.L3')
-    await delay(timeStep)
+    await delayTime.delayStep()
 }
 
 // Main

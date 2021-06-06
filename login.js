@@ -5,21 +5,28 @@ const baseDir = './data/';
 const pathFileUserInfo = `${baseDir}user-credentials.txt`;
 const pathFileCookiesGmail = `${baseDir}cookieGmail.txt`;
 const pathFileCookiesGoogle = `${baseDir}cookieGoogle.txt`;
+const pathFileCookiesYoutube = `${baseDir}cookieYoutube.txt`;
+
 const gmailUrl = 'https://mail.google.com';
-const googleUrl = 'https://google.com.vn';
+const googleUrl = 'https://google.com';
+const youtubeUrl = 'https://youtube.com';
+
 const gmailCheckExpireCookieUrl = 'https://mail.google.com/mail/u/0/feed/atom';
 const googleCheckExpireCookieUrl = googleUrl;
+const youtubeCheckExpireCookieUrl = youtubeUrl;
 
 const config = {
     "gmail": {
-        "url": gmailUrl,
         "pathCookie": pathFileCookiesGmail,
         "pathExpireCookie": gmailCheckExpireCookieUrl
     },
     "google": {
-        "url": googleUrl,
         "pathCookie": pathFileCookiesGoogle,
         "pathExpireCookie": googleCheckExpireCookieUrl
+    },
+    "youtube": {
+        "pathCookie": pathFileCookiesYoutube,
+        "pathExpireCookie": youtubeCheckExpireCookieUrl
     }
 };
 
@@ -112,7 +119,7 @@ const signInWithCookies = async (page, mode) => {
 
 const loginGmail = async (page) => {
     console.log("Start Login");
-    if (!existsSync(`${baseDir}cookie.txt`)) {
+    if (!existsSync(pathFileCookiesGmail)) {
         await page.goto(gmailUrl);
         await delayTime.delayStep();
         await signInWithUsernamePassword(page, 'gmail');
@@ -124,7 +131,7 @@ const loginGmail = async (page) => {
 
 const loginGoogle = async (page) => {
     console.log("Start Login");
-    if (!existsSync(`${baseDir}cookieGoogle.txt`)) {
+    if (!existsSync(pathFileCookiesGoogle)) {
         await page.goto(googleUrl);
         await delayTime.delayStep();
         await page.click("a.gb_3.gb_4.gb_9d.gb_3c");
@@ -136,7 +143,22 @@ const loginGoogle = async (page) => {
     console.log("Logged");
 }
 
+const loginYoutube = async (page) => {
+    console.log("Start Login");
+    if (!existsSync(pathFileCookiesYoutube)) {
+        await page.goto(youtubeUrl);
+        await delayTime.delayStep();
+        await page.click("#buttons > ytd-button-renderer > a");
+        await delayTime.delayStep();
+        await signInWithUsernamePassword(page, 'youtube');
+    } else {
+        await signInWithCookies(page, 'youtube');
+    }
+    console.log("Logged");
+}
+
 module.exports = {
     loginGmail,
-    loginGoogle
+    loginGoogle,
+    loginYoutube
 }
