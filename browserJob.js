@@ -99,6 +99,6 @@ const searchYoutube = async (page) => {
 
     await searchYoutube(page);
 
-    await browser.close()
-    process.exit()
+    await browser.close();
+    process.exit();
 })();

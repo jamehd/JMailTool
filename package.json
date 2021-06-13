@@ -4,7 +4,10 @@
   "description": "Tool Gmail",
   "main": "gmail.js",
   "scripts": {
-    "build": "pkg gmailJobs.js"
+    "build": "rm -rf build && pkg . --out-path build && cp -R ./node_modules/puppeteer/.local-chromium build/chromium"
+  },
+  "bin": {
+    "main": "gmailJob.js"
   },
   "pkg": {
     "assets": [
@@ -12,7 +15,7 @@
       "src/**/*"
     ],
     "targets": [
-      "node10-win-x86"
+      "node14-win"
     ],
     "scripts": [
       "node_modules/puppeteer/lib/*.js",
@@ -23,6 +26,7 @@
   "license": "ISC",
   "dependencies": {
     "jsonfile": "^6.1.0",
+    "path": "^0.12.7",
     "pkg": "^5.2.1",
     "puppeteer": "^9.1.1",
     "puppeteer-extra": "^3.1.18",
