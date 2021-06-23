@@ -104,34 +104,42 @@ const main = async () => {
 
     await searchGoogle(page);
 
-    await readNews(page);
+    // await readNews(page);
 
     await searchYoutube(page);
 
-    await watchVideo(page);
+    // await watchVideo(page);
 
     await browser.close();
-    process.exit();
+    // process.exit();
 };
 
 const mqtt = require('mqtt');
 const client = mqtt.connect('mqtt://localhost:1883');
+const topic = 'JOB';
+const api = require('./api');
 
-const topic = 'VPSTOOL'
-
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+client.on('connect', () => {
+    client.subscribe(topic);
+})
 
 client.on('message', async (topic, message) => {
     try {
         message = message.toString();
         console.log(message);
-        await main();
+        let obj = JSON.parse(message);
+        if (obj.Action === 'StartGmailJob') {
+            let jobId = obj.Data.JobId;
+            api.receivedJob(jobId);
+            await delayTime.delay(3000);
+            try {
+                await main();
+                api.finishedJobSuccess(jobId);
+            } catch (error) {
+                api.finishedJobFailed(jobId);
+            }
+        }
     } catch (error) {
         console.log(error)
     }
 });
-
-
-client.on('connect', () => {
-    client.subscribe(topic);
-})
